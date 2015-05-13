@@ -1,0 +1,45 @@
+﻿@model WebFrontend.Models.OCAPETask
+
+@{
+    ViewBag.Title = "Leaderboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Leaderboard for @Model.Title</h2>
+
+
+<div id="accordion" class="panel-group">
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <td>Submitter</td>
+                <td>Submission Date</td>
+                <td>Language</td>
+                <td>Score</td>
+                <td>Details</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (WebFrontend.Models.OCAPESubmission run in ViewBag.AllSubmissions)
+            {
+                <tr>
+                    <td>@run.Owner.UserName</td>
+                    <td>@run.CreatedAt</td>
+                    <td>@run.Extension</td>
+                    <td>@run.Report.Score</td>
+                    <td><a data-toggle="collapse" data-parent="#accordion" href="#@run.ID">Expand</a></td>
+                </tr>
+                <tr>
+                    
+                    <td colspan="4">
+                        <div id="@run.ID" class="collapse">
+                            @Html.Partial("_SubmissionReportRuns", run.Report)
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

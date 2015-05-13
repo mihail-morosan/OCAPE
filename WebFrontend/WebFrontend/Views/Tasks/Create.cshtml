@@ -1,0 +1,17 @@
+﻿@model WebFrontend.Models.OCAPETask
+
+@{
+    ViewBag.Title = "Create Task";
+}
+
+<h2>CreateTask</h2>
+
+@Html.Partial("_CreateTask")
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

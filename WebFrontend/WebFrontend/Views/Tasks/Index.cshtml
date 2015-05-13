@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebFrontend.Models.OCAPETask>
+
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "All Tasks";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            Username
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner.UserName)
+        </td>
+        <td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (item.Owner.Id == User.Identity.GetUserId())
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                }
+            }
+            
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Graphs", "Graphs", new { id = item.ID }, new { @class = "btn btn-default" })
+            @if(item.IsLeaderboardPublic || (!item.IsLeaderboardPublic && item.Owner.Id == User.Identity.GetUserId()))
+            { 
+                @Html.ActionLink("Leaderboard", "Leaderboard", new { id = item.ID }, new { @class = "btn btn-info" })
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (item.Owner.Id == User.Identity.GetUserId())
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                }
+            }
+        </td>
+    </tr>
+}
+
+</table>

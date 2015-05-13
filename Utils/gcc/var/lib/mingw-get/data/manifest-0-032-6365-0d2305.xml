@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<package id="manifest-0-032-6365-0d2305">
+    <release tarname="gmp-5.1.2-1-mingw32-dev.tar.lzma" />
+    <references>
+        <sysroot id="sysroot-0-002-a7c6-d7dbb5" />
+    </references>
+    <manifest>
+        <dir path="include" />
+        <file path="include/gmp.h" />
+        <file path="include/gmpxx.h" />
+        <dir path="lib" />
+        <file path="lib/libgmp.dll.a" />
+        <file path="lib/libgmpxx.dll.a" />
+        <dir path="mingw32" />
+        <dir path="mingw32/include" />
+        <file path="mingw32/include/gmp.h" />
+        <file path="mingw32/include/gmpxx.h" />
+        <dir path="mingw32/lib" />
+        <file path="mingw32/lib/libgmp.dll.a" />
+        <file path="mingw32/lib/libgmpxx.dll.a" />
+    </manifest>
+</package>

@@ -1,0 +1,46 @@
+﻿@model WebFrontend.Models.OCAPETask
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit @Model.Title</h2>
+
+
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#details" role="tab" data-toggle="tab">Task Details</a></li>
+        <li><a href="#purge" role="tab" data-toggle="tab">Operations</a></li>
+        <li><a href="#uploadtest" role="tab" data-toggle="tab">Upload Test Pairs</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="details">
+            @Html.Partial("_EditTask", Model)
+        </div>
+
+        <div class="tab-pane" id="purge">
+            @using (Html.BeginForm("PurgeSubmissions", "Tasks"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("taskId", Model.ID)
+                <div class="form-actions no-color">
+                    <input type="submit" value="Purge Empty Submissions" class="btn btn-warning" />
+                </div>
+            }
+        </div>
+
+        <div class="tab-pane" id="uploadtest">
+            @Html.Partial("_UploadTaskTestPair", Model)
+        </div>
+    </div>
+</div>
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

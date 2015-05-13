@@ -1,0 +1,28 @@
+﻿@model WebFrontend.Models.OCAPETask
+@using WebFrontend.Controllers
+@{
+    ViewBag.Title = "Graphs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Graphs for @Model.Title</h2>
+
+<h3>Best runtime per language</h3>
+
+@Html.LanguageChart((List<WebFrontend.Models.OCAPESubmissionReport>)ViewBag.Reports, 1)
+
+<h3>Average runtime per language</h3>
+
+@Html.LanguageChart((List<WebFrontend.Models.OCAPESubmissionReport>)ViewBag.Reports, 2)
+
+<h3>Average memory usage per language</h3>
+
+@Html.LanguageChart((List<WebFrontend.Models.OCAPESubmissionReport>)ViewBag.Reports, 3)
+
+<h3>Best submissions / language (score)</h3>
+
+@Html.LanguageChart((List<WebFrontend.Models.OCAPESubmissionReport>)ViewBag.Reports, 5)
+
+<h3>Best submissions / language (runtime)</h3>
+
+@Html.LanguageChart((List<WebFrontend.Models.OCAPESubmissionReport>)ViewBag.Reports, 4)

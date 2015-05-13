@@ -1,0 +1,51 @@
+﻿@model WebFrontend.Models.OCAPETask
+@using Microsoft.AspNet.Identity
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Description
+        </h3>
+
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.DisplayFor(model => model.Description)
+        </p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Details
+        </h3>
+
+    </div>
+    <div class="panel-body">
+        <h4>Task Deadline</h4>
+        <p>
+            @Html.DisplayFor(model => model.DeadlineDate)
+        </p>
+
+        @if(Model.IsMaxBoundaryPublic || (User.Identity.IsAuthenticated && Model.Owner.Id == User.Identity.GetUserId()))
+        { 
+
+            <h4>Maximum Memory Usage (kb)</h4>
+            <p>@Html.DisplayFor(model => model.MaxMemoryUsage)</p>
+
+            <h4>Maximum Runtime (ms)</h4>
+            <p>@Html.DisplayFor(model => model.MaxTimeToRun)</p>
+        }
+
+        @if(Model.IsWeightingPublic || (User.Identity.IsAuthenticated && Model.Owner.Id == User.Identity.GetUserId()))
+        {
+
+            <h4>Scoring - Memory Usage Importance</h4>
+            <p>@Html.DisplayFor(model => model.MemoryUsageWeight)</p>
+
+            <h4>Scoring - Runtime Importance</h4>
+            <p>@Html.DisplayFor(model => model.TimeToRunWeight)</p>
+        }
+    </div>
+</div>

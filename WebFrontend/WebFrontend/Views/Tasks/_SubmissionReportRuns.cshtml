@@ -1,0 +1,45 @@
+﻿@model WebFrontend.Models.OCAPESubmissionReport
+
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <td>Test</td>
+            <td>Run Time (ms)</td>
+            <td>Max Memory (kb)</td>
+            <td>Correct Output</td>
+            <td>Within Constraints</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model.CompiledSuccessfully.Equals("TRUE"))
+        { 
+            foreach (WebFrontend.Models.OCAPESubmissionReportRun run in Model.OCAPESubmissionReportRuns)
+            {
+                <tr>
+                    <td>@run.Test</td>
+                    <td>@run.TimePassed</td>
+                    <td>@run.MemoryUsage</td>
+                    <td>@run.IsCorrect %</td>
+                    <td>@(run.IsWithinConstraints(run.Report.Submission.Task.ScoringType == 1) == 1 ? "true" : "false")</td>
+                </tr>
+
+            }
+            <tr>
+                <td>Average: </td>
+                <td>@Model.AverageRuntime()</td>
+                <td>@Model.AverageMemoryUsage()</td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">
+                    Compilation failed
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

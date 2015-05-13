@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "RoleCreate";
+}
+<div class="spacerBody">
+    <p>&nbsp;</p>
+    <h2>Role Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div>
+            Role name
+        </div>
+        <p>
+            @Html.TextBox("RoleName")
+        </p>
+        <input type="submit" value="Save" />
+    }
+</div>

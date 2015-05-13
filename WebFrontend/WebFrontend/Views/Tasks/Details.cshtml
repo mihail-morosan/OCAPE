@@ -1,0 +1,102 @@
+﻿@model WebFrontend.Models.OCAPETask
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#details" role="tab" data-toggle="tab">Task Details</a></li>
+        <li><a href="#code" role="tab" data-toggle="tab">Upload Code</a></li>
+        <li><a href="#submissions" role="tab" data-toggle="tab">Your Submissions</a></li>
+@if (User.Identity.IsAuthenticated)
+        {
+            if (Model.Owner.Id == User.Identity.GetUserId())
+            {
+        <li><a href="#tests" role="tab" data-toggle="tab">Available Tests</a></li>
+}
+}
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="details">
+            @Html.Partial("_DetailsTask")
+        </div>
+
+        <div class="tab-pane" id="code">
+            @Html.Partial("_UploadCode")
+        </div>
+
+        <div class="tab-pane" id="submissions">
+            <h3>Your submissions to this task:</h3>
+            <div class="panel-group" id="accordion">
+                @foreach (WebFrontend.Models.OCAPESubmission s in ViewBag.Submissions)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#@s.ID">
+                                    @Path.GetFileName(s.Filename)
+                                    on
+                                    @s.CreatedAt
+                                    using the
+                                    @s.Extension
+                                    compiler -
+                                    @if (s.Report != null)
+                                    {
+                                        <span>
+                                            Score @s.Report.Score
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>No Report Available</span>
+                                    }
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="@s.ID" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div>
+                                    @s.OwnerNote
+                                </div>
+                                @if (s.Report != null)
+                                {
+                                    @Html.Partial("_SubmissionReportRuns", s.Report)
+                                }
+                                else
+                                {
+                                    <b>No Report Available Yet</b>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (Model.Owner.Id == User.Identity.GetUserId())
+            {
+        <div class="tab-pane" id="tests">
+                    <h3>Tests for this task: (ADMIN ONLY)</h3>
+                    @foreach (string filename in ViewBag.testList)
+                    {
+                        <p>
+                            @filename
+                        </p>
+                    }
+                
+        </div>
+            }
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
